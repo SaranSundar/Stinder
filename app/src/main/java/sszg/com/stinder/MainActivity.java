@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavBehaviors();
         setupBottomNavStyle();
 
-        createFakeNotification();
+        //createFakeNotification();
 
         addBottomNavigationItems();
         bottomNavigation.setCurrentItem(0);
@@ -109,11 +109,18 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setPagingEnabled(false);
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragments(createFragment(R.color.bottomtab_0));
+        pagerAdapter.addFragments(createOpenGroupsFragment(R.color.bottomtab_0));
         pagerAdapter.addFragments(createFragment(R.color.bottomtab_1));
         pagerAdapter.addFragments(createFragment(R.color.bottomtab_2));
 
         viewPager.setAdapter(pagerAdapter);
+    }
+
+    @NonNull
+    private OpenGroupsFragment createOpenGroupsFragment(int color) {
+        OpenGroupsFragment fragment = new OpenGroupsFragment();
+        fragment.setArguments(passFragmentArguments(fetchColor(color)));
+        return fragment;
     }
 
     @NonNull
