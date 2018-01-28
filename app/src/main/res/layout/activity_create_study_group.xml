@@ -61,7 +61,6 @@
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:hint="Date/Time"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintEnd_toEndOf="@+id/groupNameTextView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/groupNameTextView"
@@ -78,4 +77,16 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/groupNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/dateTimeButton" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Done"
+        app:layout_constraintEnd_toEndOf="@+id/additionalInfoTextView"
+        app:layout_constraintStart_toStartOf="@+id/additionalInfoTextView"
+        app:layout_constraintTop_toBottomOf="@+id/additionalInfoTextView" />
 </android.support.constraint.ConstraintLayout>

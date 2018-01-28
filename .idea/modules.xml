@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Stinder.iml" filepath="$PROJECT_DIR$/.idea/Stinder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Stinder.iml" filepath="$PROJECT_DIR$/Stinder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Stinder-master.iml" filepath="$PROJECT_DIR$/Stinder-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\june6\floobits\share\saran\Stinder\Stinder.iml" filepath="C:\Users\june6\floobits\share\saran\Stinder\Stinder.iml" />
+      <module fileurl="file://C:\Users\june6\floobits\share\saran\Stinder\Stinder-master.iml" filepath="C:\Users\june6\floobits\share\saran\Stinder\Stinder-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

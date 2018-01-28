@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "754629322994",
+    "firebase_url": "https://stinder-3b469.firebaseio.com",
+    "project_id": "stinder-3b469",
+    "storage_bucket": "stinder-3b469.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754629322994:android:e27d01e06d471f76",
+        "android_client_info": {
+          "package_name": "sszg.com.stinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754629322994-h1j6lu89fhofra88gk4o2up5iup21odl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sszg.com.stinder",
+            "certificate_hash": "31ade8e4c337e6ef0fc1d3df5ebcf7883e270aa6"
+          }
+        },
+        {
+          "client_id": "754629322994-ki44ds0ejnerdot4j0e3lj359avicfok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZJLIhk5FZBeD2_J4DsfOb8EeD8r-l3sM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754629322994-ki44ds0ejnerdot4j0e3lj359avicfok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
