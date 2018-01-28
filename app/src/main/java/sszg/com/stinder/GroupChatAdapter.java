@@ -52,7 +52,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Simp
                     String[] objValues = new String[values.length];
                     for (int i = 0; i < values.length; i++) {
                         String[] splits = values[i].split("=", 2);
-                        Log.d("SPLIT: ", splits[0] + " " + splits[1]);
                         String name = splits[0];
                         String val = splits[1];
                         val = val.replace("}", "");

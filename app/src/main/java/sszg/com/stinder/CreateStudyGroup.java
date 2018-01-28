@@ -214,7 +214,9 @@ public class CreateStudyGroup extends AppCompatActivity implements
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+        if (data != null) {
+            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+        }
         try {
             switch (requestCode) {
 

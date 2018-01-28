@@ -71,7 +71,7 @@ public class RAdap extends Fragment {
      * @return
      */
     private int getLighterColor(int color) {
-        return Color.argb(30,
+        return Color.argb(50,
                 Color.red(color),
                 Color.green(color),
                 Color.blue(color)
