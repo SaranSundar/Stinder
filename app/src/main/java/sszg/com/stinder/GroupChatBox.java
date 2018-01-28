@@ -1,6 +1,9 @@
 package sszg.com.stinder;
 
-public class GroupChatBox {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GroupChatBox implements Parcelable {
 
     private String dateTime;
     private String image;
@@ -21,6 +24,29 @@ public class GroupChatBox {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    protected GroupChatBox(Parcel in) {
+        dateTime = in.readString();
+        image = in.readString();
+        groupName = in.readString();
+        roomNumber = in.readString();
+        additionalInfo = in.readString();
+        className = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+    }
+
+    public static final Creator<GroupChatBox> CREATOR = new Creator<GroupChatBox>() {
+        @Override
+        public GroupChatBox createFromParcel(Parcel in) {
+            return new GroupChatBox(in);
+        }
+
+        @Override
+        public GroupChatBox[] newArray(int size) {
+            return new GroupChatBox[size];
+        }
+    };
 
     public String getDateTime() {
         return dateTime;
@@ -88,4 +114,20 @@ public class GroupChatBox {
 
     private String latitude;
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dateTime);
+        dest.writeString(image);
+        dest.writeString(groupName);
+        dest.writeString(roomNumber);
+        dest.writeString(additionalInfo);
+        dest.writeString(className);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+    }
 }

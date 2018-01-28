@@ -68,6 +68,7 @@ public class CreateStudyGroup extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +118,7 @@ public class CreateStudyGroup extends AppCompatActivity implements
         }
 
         // Write a message to the database
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         myRef = database.getReference("groups/");
 
         sref = FirebaseStorage.getInstance().getReference();
@@ -153,6 +154,22 @@ public class CreateStudyGroup extends AppCompatActivity implements
 
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Stored...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error...", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
+
+        groupInfo.put("mac-id", MainActivity.getMacAddr());
+        myRef = database.getReference("users/");
+        myRef.push().setValue(groupInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Joined", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error...", Toast.LENGTH_SHORT).show();

@@ -1,20 +1,13 @@
 package sszg.com.stinder;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class GroupInformation extends AppCompatActivity {
-    private ImageView groupPicImageView,mapsImageView;
+public class PerAct extends AppCompatActivity {
+    private ImageView groupPicImageView, mapsImageView;
     private TextView groupNameTextView, classNameTextView, roomNumberTextView, dateTimeTextView, additionalInfoTextView;
     private Button joinButton;
     private DatabaseReference myRef;
@@ -50,7 +42,8 @@ public class GroupInformation extends AppCompatActivity {
         mapsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Longitude: " + groupChatBox.getLongitude() + ", Latitude: " + groupChatBox.getLatitude(), Toast.LENGTH_SHORT).show();;
+                Toast.makeText(getApplicationContext(), "Longitude: " + groupChatBox.getLongitude() + ", Latitude: " + groupChatBox.getLatitude(), Toast.LENGTH_SHORT).show();
+                ;
             }
         });
         if (groupChatBox.getImage().contains("firebase")) {
@@ -61,9 +54,9 @@ public class GroupInformation extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     String total = singleSnapshot.getValue().toString();
-                    if(!vals.contains(total)){
+                    if (!vals.contains(total)) {
                         vals.add(total);
                     }
                 }
@@ -79,40 +72,29 @@ public class GroupInformation extends AppCompatActivity {
         roomNumberTextView.setText(groupChatBox.getRoomNumber());
         dateTimeTextView.setText(groupChatBox.getDateTime());
         additionalInfoTextView.setText(groupChatBox.getAdditionalInfo());
+        joinButton.setText("Leave Group");
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mac = MainActivity.getMacAddr();
-                for(int i=0;i<vals.size();i++){
-                    if(vals.get(i).contains(mac) && vals.get(i).contains(String.valueOf(groupNameTextView.getText()))){
-                        Toast.makeText(getApplicationContext(), "Error: Already in group", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+                final String mac = MainActivity.getMacAddr();
 
-                HashMap<String, String> groupInfo = new HashMap<>();
-                groupInfo.put("mac-id", mac);
-                groupInfo.put("image", String.valueOf(groupChatBox.getImage()));
-                groupInfo.put("groupName", String.valueOf(groupNameTextView.getText()));
-                groupInfo.put("className", String.valueOf(classNameTextView.getText()));
-                groupInfo.put("roomNumber", String.valueOf(roomNumberTextView.getText()));
-                groupInfo.put("additionalInfo", String.valueOf(additionalInfoTextView.getText()));
-                groupInfo.put("date", String.valueOf(dateTimeTextView.getText()));
-                groupInfo.put("longitude", groupChatBox.getLongitude());
-                groupInfo.put("latitude", groupChatBox.getLatitude());
-                myRef.push().setValue(groupInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Joined", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error...", Toast.LENGTH_SHORT).show();
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                            if (singleSnapshot.getValue().toString().contains(mac)) {
+                                singleSnapshot.getRef().setValue(null);
+                                Toast.makeText(getApplicationContext(), "Leaving Group", Toast.LENGTH_SHORT).show();
+                                finish();
+                                return;
+                            }
                         }
-
                     }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
                 });
             }
         });

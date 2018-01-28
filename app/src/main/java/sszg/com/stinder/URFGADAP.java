@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.SimpleItem> {
+public class URFGADAP extends RecyclerView.Adapter<URFGADAP.SimpleItem> {
 
     private DatabaseReference myRef = null;
     //  Data
@@ -30,17 +30,18 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Simp
 
     private Context context;
 
-    public GroupChatAdapter(final Context context) {
+    public URFGADAP(final Context context) {
         this.context = context;
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        myRef = database.getReference("groups/");
+        myRef = database.getReference("users/");
 
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                groupChatBoxes.clear();
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 //"https://firebasestorage.googleapis.com/v0/b/stinder-3b469.appspot.com/o/media%2Fimage%3A83941?alt=media&token=64944f86-a065-463b-bc32-fa3869e7b91f"
@@ -73,7 +74,10 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Simp
                             objValues[6] = val;
                         } else if (name.contains("latitude")) {
                             objValues[7] = val;
+                        } else if (val.contains(MainActivity.getMacAddr())) {
+                            shouldDisplay = true;
                         }
+                        Log.d("FUCKFUCKFUCK", values[i]);
 
                     }
                     GroupChatBox box = new GroupChatBox(objValues[0], objValues[1], objValues[2], objValues[3], objValues[4], objValues[5], objValues[6], objValues[7]);
@@ -86,7 +90,10 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Simp
                     }
                     if (!found) {
 
-                        groupChatBoxes.add(box);
+                        if (shouldDisplay) {
+                            Log.d("FUCK", box.toString());
+                            groupChatBoxes.add(box);
+                        }
 
                     }
                     //Log.d("FIREBASE:", "BOX IS:  " + box.toString());
@@ -131,7 +138,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Simp
         holder.cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, GroupInformation.class);
+                Intent intent = new Intent(context, PerAct.class);
                 intent.putExtra("parcel_data", groupChatBox);
                 context.startActivity(intent);
             }

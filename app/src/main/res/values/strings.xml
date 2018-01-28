@@ -3,8 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab_1">Green</string>
-    <string name="tab_2">Red</string>
-    <string name="tab_3">Blue</string>
+    <string name="tab_1">Open Wall</string>
+    <string name="tab_2">My Wall</string>
+    <string name="tab_3">Posts</string>
     <string name="title_activity_group_information">GroupInformation</string>
+    <string name="title_activity_map_display">Map</string>
 </resources>

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class OpenGroupsFragment extends Fragment {
+public class UrFG extends Fragment {
     public static final String TAG = OpenGroupsFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -25,7 +25,7 @@ public class OpenGroupsFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    public OpenGroupsFragment() {
+    public UrFG() {
         // Required empty public constructor
     }
 
@@ -48,7 +48,8 @@ public class OpenGroupsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setBackgroundColor(getLighterColor(color));
 
-        GroupChatAdapter adapter = new GroupChatAdapter(getContext());
+        URFGADAP adapter = new URFGADAP(getContext());
+
         recyclerView.setAdapter(adapter);
 
         return rootView;

@@ -12,14 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity  {
+
+public class MainActivity extends AppCompatActivity {
 
     private final int[] colors = {R.color.bottomtab_0, R.color.bottomtab_1, R.color.bottomtab_2};
 
@@ -47,9 +51,18 @@ public class MainActivity extends AppCompatActivity  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateStudyGroup.class);
-                //intent.putExtra(EXTRA_MESSAGE, message);
-                startActivity(intent);
+                if (viewPager.getCurrentItem() == 0) {
+                    Intent intent = new Intent(getApplicationContext(), CreateStudyGroup.class);
+                    //intent.putExtra(EXTRA_MESSAGE, message);
+                    startActivity(intent);
+                } else if (viewPager.getCurrentItem() == 1) {
+                    Intent intent = new Intent(getApplicationContext(), CreateStudyGroup.class);
+                    //intent.putExtra(EXTRA_MESSAGE, message);
+                    startActivity(intent);
+                } else if (viewPager.getCurrentItem() == 2) {
+                    Toast.makeText(getApplicationContext(), "MAKE REDDIT POST HERE", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -104,16 +117,31 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+
     private void setupViewPager() {
         viewPager = (NoSwipePager) findViewById(R.id.viewpager);
         viewPager.setPagingEnabled(false);
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
 
         pagerAdapter.addFragments(createOpenGroupsFragment(R.color.bottomtab_0));
-        pagerAdapter.addFragments(createFragment(R.color.bottomtab_1));
-        pagerAdapter.addFragments(createFragment(R.color.bottomtab_2));
+        pagerAdapter.addFragments(createUrFG(R.color.bottomtab_1));
+        pagerAdapter.addFragments(createRed(R.color.bottomtab_2));
 
         viewPager.setAdapter(pagerAdapter);
+    }
+
+    @NonNull
+    private RAdap createRed(int color) {
+        RAdap fragment = new RAdap();
+        fragment.setArguments(passFragmentArguments(fetchColor(color)));
+        return fragment;
+    }
+
+    @NonNull
+    private UrFG createUrFG(int color) {
+        UrFG fragment = new UrFG();
+        fragment.setArguments(passFragmentArguments(fetchColor(color)));
+        return fragment;
     }
 
     @NonNull
@@ -134,6 +162,7 @@ public class MainActivity extends AppCompatActivity  {
     private Bundle passFragmentArguments(int color) {
         Bundle bundle = new Bundle();
         bundle.putInt("color", color);
+        bundle.putInt("POS", viewPager.getCurrentItem());
         return bundle;
     }
 
@@ -155,6 +184,32 @@ public class MainActivity extends AppCompatActivity  {
         }, 1000);
     }
 
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    //res1.append(Integer.toHexString(b & 0xFF) + ":");
+                    res1.append(String.format("%02X:", b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "02:00:00:00:00:00";
+    }
 
     public void setupBottomNavBehaviors() {
 //        bottomNavigation.setBehaviorTranslationEnabled(false);
@@ -200,9 +255,9 @@ public class MainActivity extends AppCompatActivity  {
      * Also assigns a distinct color to each Bottom Navigation item, used for the color ripple.
      */
     private void addBottomNavigationItems() {
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_map_24dp, colors[0]);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_local_restaurant_24dp, colors[1]);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_store_mall_directory_24dp, colors[2]);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_view_compact_black_24dp, colors[0]);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_add_box_black_24dp, colors[1]);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_brightness_7_black_24dp, colors[2]);
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
